@@ -1,0 +1,69 @@
+#ifndef __VL53L0_I2C_H
+#define __VL53L0_I2C_H
+
+#include "sys.h"
+
+//////////////////////////////////////////////////////////////////////////////////	 
+//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+//ALIENTEK MiniV3 STM32开发板
+//VL53L0X IIC驱动 代码	   
+//正点原子@ALIENTEK
+//技术论坛:www.openedv.com
+//修改日期:2017/7/1
+//版本：V1.0
+//版权所有，盗版必究。
+//Copyright(C) 广州市星翼电子科技有限公司 2009-2019
+//All rights reserved									  
+//////////////////////////////////////////////////////////////////////////////////
+
+//IO方向设置  1
+#define VL_SDA1_IN()  {GPIOC->CRL&=0xFFFFF0FF;GPIOC->CRL|=0x00000800;}
+#define VL_SDA1_OUT() {GPIOC->CRL&=0xFFFFF0FF;GPIOC->CRL|=0x00000300;}
+#define VL_IIC_SCL1    PCout(1)   //SCL1
+#define VL_IIC_SDA1    PCout(2) 	//SDA1
+#define VL_READ_SDA1   PCin(2) 		//输入SDA1 
+
+//IO方向设置  2
+#define VL_SDA2_IN()  {GPIOA->CRL&=0xFFF0FFFF;GPIOA->CRL|=0x00080000;}
+#define VL_SDA2_OUT() {GPIOA->CRL&=0xFFF0FFFF;GPIOA->CRL|=0x00030000;}
+#define VL_IIC_SCL2    PAout(3)   //SCL2
+#define VL_IIC_SDA2    PAout(4) 	//SDA2
+#define VL_READ_SDA2   PAin(4) 		//输入SDA2 
+
+//IO方向设置  3
+#define VL_SDA3_IN()  {GPIOA->CRL&=0x0FFFFFFF;GPIOA->CRL|=0x80000000;}
+#define VL_SDA3_OUT() {GPIOA->CRL&=0x0FFFFFFF;GPIOA->CRL|=0x30000000;} 
+#define VL_IIC_SCL3    PAout(6)   //SCL3
+#define VL_IIC_SDA3    PAout(7) 	//SDA3
+#define VL_READ_SDA3   PAin(7) 		//输入SDA3 
+
+//IO方向设置  4
+#define VL_SDA4_IN()  {GPIOB->CRH&=0xFFFFFFF0;GPIOB->CRH|=0x00000008;}
+#define VL_SDA4_OUT() {GPIOB->CRH&=0xFFFFFFF0;GPIOB->CRH|=0x00000003;} 
+#define VL_IIC_SCL4    PBout(7)   //SCL4
+#define VL_IIC_SDA4    PBout(8) 	//SDA4
+#define VL_READ_SDA4   PBin(8)    //输入SDA 
+
+//状态
+#define STATUS_OK       0x00
+#define STATUS_FAIL     0x01
+
+u8 iic_numb=2;
+
+//IIC操作函数
+void VL53L0X_i2c_init(void);//初始化IIC的IO口
+
+u8 VL53L0X_write_byte(u8 address,u8 index,u8 data);              //IIC写一个8位数据
+u8 VL53L0X_write_word(u8 address,u8 index,u16 data);             //IIC写一个16位数据
+u8 VL53L0X_write_dword(u8 address,u8 index,u32 data);            //IIC写一个32位数据
+u8 VL53L0X_write_multi(u8 address, u8 index,u8 *pdata,u16 count);//IIC连续写
+
+u8 VL53L0X_read_byte(u8 address,u8 index,u8 *pdata);             //IIC读一个8位数据
+u8 VL53L0X_read_word(u8 address,u8 index,u16 *pdata);            //IIC读一个16位数据
+u8 VL53L0X_read_dword(u8 address,u8 index,u32 *pdata);           //IIC读一个32位数据
+u8 VL53L0X_read_multi(u8 address,u8 index,u8 *pdata,u16 count);  //IIC连续读
+
+
+#endif 
+
+
